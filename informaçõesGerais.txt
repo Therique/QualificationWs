@@ -1,0 +1,9 @@
+$ curl -X GET http://localhost:8000/book
+$ curl -X GET http://localhost:8000/book/12
+$ curl -X POST http://localhost:8000/book
+$ curl -X PUT http://localhost:8000/book/12
+$ curl -X DELETE http://localhost:8000/book/12
+
+
+Após a configuração do nosso CLI, vamos rodar o cli do Doctrine dentro da pasta de bins dentro da nossa pasta vendor.
+vendor/bin/doctrine orm:schema-tool:update --force
