@@ -10,9 +10,8 @@ class Qualificacao {
      * @GeneratedValue
      */
     public $id;
-    /**
-     * @var string
-     * @Column(type="string") 
-     */
+
+
+   
 
 }

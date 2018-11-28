@@ -136,4 +136,179 @@ $app->delete('/book/{id}', function (Request $request, Response $response) use (
     return $return;
 });
 
+
+
+
+
+//                                                              CRUD LINGUAGEM
+
+
+$app->get('/linguagem', function (Request $request, Response $response) use ($app) {
+
+    $entityManager = $this->get('em');
+    $linguagensRepository = $entityManager->getRepository('App\Models\Entity\Linguagem');
+    $linguagens = $linguagensRepository->findAll();
+
+    $return = $response->withJson($linguagens, 200)->withHeader('Content-type', 'application/json');
+    return $return;
+});
+
+/**
+ * Retornando mais informações do livro informado pelo id
+ * @request curl -X GET http://localhost:8000/book/1
+ */
+$app->get('/linguagem/{id}', function (Request $request, Response $response) use ($app) {
+    $route = $request->getAttribute('route');
+    $id = $route->getArgument('id');
+
+    $entityManager = $this->get('em');
+    $linguagensRepository = $entityManager->getRepository('App\Models\Entity\Linguagem');
+    $linguagens = $linguagensRepository->find($id);        
+
+    $return = $response->withJson($linguagens, 200)->withHeader('Content-type', 'application/json');
+    return $return;
+});
+
+$app->post('/linguagem', function (Request $request, Response $response) use ($app) {
+
+    $params = (object) $request->getParams();
+    $entityManager = $this->get('em');
+    $linguagem = (new Linguagem())->setName($params->name)
+        ->setAuthor($params->author);
+    
+    $entityManager->persist($linguagem);
+    $entityManager->flush();
+
+    $return = $response->withJson($linguagem, 201)->withHeader('Content-type', 'application/json');
+    return $return;
+});
+
+$app->put('/linguagem/{id}', function (Request $request, Response $response) use ($app) {
+
+    $route = $request->getAttribute('route');
+    $id = $route->getArgument('id');
+
+    $entityManager = $this->get('em');
+    $linguagensRepository = $entityManager->getRepository('App\Models\Entity\Linguagem');
+    $linguagens = $linguagensRepository->find($id);   
+
+    $linguagens->setName($request->getParam('name'))
+        ->setAuthor($request->getParam('author'));
+
+    $entityManager->persist($linguagens);
+    $entityManager->flush();        
+
+    $return = $response->withJson($linguagens, 200)->withHeader('Content-type', 'application/json');
+    return $return;
+});
+
+/**
+ * Deleta o livro informado pelo ID
+ * @request curl -X DELETE http://localhost:8000/book/3
+ */
+$app->delete('/linguagem/{id}', function (Request $request, Response $response) use ($app) {
+    /**
+     * Pega o ID do livro informado na URL
+     */
+    $route = $request->getAttribute('route');
+    $id = $route->getArgument('id');
+
+    $entityManager = $this->get('em');
+    $linguagensRepository = $entityManager->getRepository('App\Models\Entity\Linguagem');
+    $linguagens = $linguagensRepository->find($id);   
+
+    /**
+     * Remove a entidade
+     */
+    $entityManager->remove($linguagens);
+    $entityManager->flush(); 
+
+    $return = $response->withJson(['msg' => "Deletando o livro {$id}"], 204)->withHeader('Content-type', 'application/json');
+    return $return;
+});
+
+
+
+
+
+
+//                                                              CRUD LINGUAGEM
+
+
+$app->get('/funcionario', function (Request $request, Response $response) use ($app) {
+
+    $entityManager = $this->get('em');
+    $funcionariosRepository = $entityManager->getRepository('App\Models\Entity\Funcionario');
+    $funcionarios = $funcionariosRepository->findAll();
+
+    $return = $response->withJson($funcionarios, 200)->withHeader('Content-type', 'application/json');
+    return $return;
+});
+
+$app->get('/funcionario/{id}', function (Request $request, Response $response) use ($app) {
+    $route = $request->getAttribute('route');
+    $id = $route->getArgument('id');
+
+    $entityManager = $this->get('em');
+    $funcionariosRepository = $entityManager->getRepository('App\Models\Entity\Funcionario');
+    $funcionarios = $funcionariosRepository->find($id);        
+
+    $return = $response->withJson($funcionarios, 200)->withHeader('Content-type', 'application/json');
+    return $return;
+});
+
+$app->post('/funcionario', function (Request $request, Response $response) use ($app) {
+
+    $params = (object) $request->getParams();
+
+    $entityManager = $this->get('em');
+  
+    $funcionarios = (new Funcionario())->setName($params->name)->setAuthor($params->author);
+    
+    $entityManager->persist($funcionarios);
+    $entityManager->flush();
+
+    $return = $response->withJson($funcionarios, 201)->withHeader('Content-type', 'application/json');
+    return $return;
+});
+
+
+$app->put('/funcionario/{id}', function (Request $request, Response $response) use ($app) {
+
+    $route = $request->getAttribute('route');
+    $id = $route->getArgument('id');
+
+    $entityManager = $this->get('em');
+    $funcionariosRepository = $entityManager->getRepository('App\Models\Entity\Funcionario');
+    $funcionarios = $funcionariosRepository->find($id);   
+
+    $funcionarios->setName($request->getParam('name'))->setAuthor($request->getParam('author'));
+
+    $entityManager->persist($funcionarios);
+    $entityManager->flush();        
+
+    $return = $response->withJson($funcionarios, 200)->withHeader('Content-type', 'application/json');
+    return $return;
+});
+
+
+$app->delete('/funcionario/{id}', function (Request $request, Response $response) use ($app) {
+    
+    $route = $request->getAttribute('route');
+    $id = $route->getArgument('id');
+
+    $entityManager = $this->get('em');
+    $funcionariosRepository = $entityManager->getRepository('App\Models\Entity\Funcionario');
+    $funcionarios = $funcionariosRepository->find($id);   
+
+    $entityManager->remove($funcionarios);
+    $entityManager->flush(); 
+
+    $return = $response->withJson(['msg' => "Deletando o livro {$id}"], 204)->withHeader('Content-type', 'application/json');
+    return $return;
+});
+
+
+
+
 $app->run();

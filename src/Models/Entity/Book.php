@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models\Entity;
 /**
  * @Entity @Table(name="books")
@@ -9,45 +10,30 @@ class Book {
      * @Id @Column(type="integer") 
      * @GeneratedValue
      */
-    public $id;
+    protected $id;
     /**
      * @var string
      * @Column(type="string") 
      */
-    public $name;
+    protected $name;
     /**
      * @var string
      * @Column(type="string") 
      */
-    public $author;
-    /**
-     * @return int id
-     */
+    protected $author;
     public function getId(){
         return $this->id;
     }
-    /**
-     * @return string name
-     */
     public function getName(){
         return $this->name;
     }
-    /**
-     * @return string author
-     */
     public function getAuthor() {
         return $this->author;
     }    
-    /**
-     * @return Book()
-     */
     public function setName($name){
         $this->name = $name;
         return $this;  
     }
-     /**
-     * @return Book()
-     */
     public function setAuthor($author) {
         $this->author = $author;
         return $this;
