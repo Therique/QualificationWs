@@ -18,12 +18,3 @@ vendor/bin/doctrine orm:schema-tool:update --force --dump-sql
 vendor/bin/doctrine orm:schema-tool:drop --force
 
 vendor/bin/doctrine orm:schema-tool:create
-
-
-
-$conn = array(
-    'dbname' => 'qualification',
-    'user' => 'root',
-    'password' => 'Thenrique395@',
-    'host' => 'localhost',
-    'driver' => 'pdo_mysql',
